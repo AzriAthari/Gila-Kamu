@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gila Kamu! Parodi 5 detik</title>
+<style>
+:root{
+  --page:#f1ede4; --ink:#1d1a16; --btn:#d62b1f; --btn-ink:#fff;
+  --wall:#e6dfcf; --floor:#a8956f; --bonk:#ffd21f; --line:#111;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--page:#14110d; --ink:#f3eee2; --btn:#ff4a3d; --btn-ink:#14110d}
+}
+:root[data-theme="dark"]{--page:#14110d; --ink:#f3eee2; --btn:#ff4a3d; --btn-ink:#14110d}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--page);color:var(--ink);font-family:"Archivo Black","Impact",system-ui,sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:12px}
+#stage{
+  container-type:inline-size;position:relative;overflow:hidden;border-radius:14px;
+  width:min(92vw,360px,calc((100vh - 120px)*9/16));aspect-ratio:9/16;
+  background:linear-gradient(var(--wall) 0 70%,var(--floor) 70%);
+}
+.timer{position:absolute;top:3%;left:50%;transform:translateX(-50%);font:700 5.5cqw ui-monospace,monospace;
+  background:rgba(0,0,0,.55);color:#fff;padding:.6cqw 3cqw;border-radius:99px;z-index:5}
+.cap{position:absolute;top:11%;left:0;right:0;text-align:center;font:700 5.2cqw system-ui,sans-serif;color:#3b352b;padding:0 8cqw}
+.guy{position:absolute;left:10%;bottom:27%;width:40cqw;height:40cqw;font-size:34cqw;line-height:1}
+.guy span{position:absolute;inset:0}
+.hit{opacity:0}
+.desk{position:absolute;left:0;right:0;bottom:22%;height:4%;background:#6b4f2e}
+.galon{position:absolute;right:-26cqw;bottom:30%;width:20cqw;height:32cqw;
+  border:.8cqw solid rgba(40,110,200,.7);border-radius:5cqw 5cqw 3cqw 3cqw;
+  background:linear-gradient(90deg,rgba(90,170,255,.6),rgba(205,232,255,.85));transform:rotate(40deg);transform-origin:50% 100%}
+.galon::before{content:"";position:absolute;left:25%;right:25%;top:-5cqw;height:5cqw;background:#2d7be0;border-radius:1.5cqw 1.5cqw 0 0}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:6}
+.bonk{position:absolute;top:30%;left:36%;font-size:17cqw;color:var(--bonk);-webkit-text-stroke:1.2cqw var(--line);
+  paint-order:stroke fill;transform:scale(0) rotate(-10deg);z-index:4;letter-spacing:.5cqw}
+.gk{position:absolute;left:0;right:0;bottom:5%;text-align:center;font-size:17.5cqw;line-height:.95;color:#fff;
+  -webkit-text-stroke:1.4cqw var(--line);paint-order:stroke fill;opacity:0;z-index:4;text-shadow:0 1cqw 0 var(--line)}
+
+.play #stage{animation:shake 5s linear both}
+.play .calm{animation:calm 5s linear both}
+.play .hit{animation:hit 5s linear both}
+.play .guy{animation:guy 5s ease-out both}
+.play .galon{animation:swing 5s cubic-bezier(.3,.7,.4,1) both}
+.play .flash{animation:flash 5s linear both}
+.play .bonk{animation:bonk 5s linear both}
+.play .gk{animation:gk 5s linear both}
+
+@keyframes calm{0%,59.9%{opacity:1}60%,100%{opacity:0}}
+@keyframes hit{0%,59.9%{opacity:0}60%,100%{opacity:1}}
+@keyframes guy{0%,59%{transform:none}61%{transform:translateX(-5cqw) rotate(-14deg)}66%{transform:translateX(2cqw) rotate(6deg)}72%,100%{transform:rotate(-3deg)}}
+@keyframes swing{0%,52%{transform:translateX(0) rotate(40deg)}60%{transform:translateX(-62cqw) rotate(-30deg)}66%{transform:translateX(-50cqw) rotate(-8deg)}80%,100%{transform:translateX(0) rotate(40deg)}}
+@keyframes flash{0%,59.5%{opacity:0}60%{opacity:.9}66%,100%{opacity:0}}
+@keyframes bonk{0%,59.5%{transform:scale(0) rotate(-10deg);opacity:1}62%{transform:scale(1.35) rotate(-10deg)}65%{transform:scale(1) rotate(-8deg)}76%{transform:scale(1) rotate(-8deg);opacity:1}82%,100%{transform:scale(1) rotate(-8deg);opacity:0}}
+@keyframes gk{0%,65.9%{opacity:0;transform:scale(.3)}67%{opacity:1;transform:scale(1.25)}71%{transform:scale(1)}
+  76%{transform:translate(-1cqw,.6cqw) rotate(-1.5deg)}80%{transform:translate(1cqw,-.6cqw) rotate(1.5deg)}
+  84%{transform:translate(-1cqw,-.4cqw) rotate(-1deg)}88%{transform:translate(1cqw,.5cqw) rotate(1.2deg)}
+  92%{transform:translate(-.8cqw,.4cqw) rotate(-1deg)}96%{transform:translate(.8cqw,-.4cqw) rotate(1deg)}100%{opacity:1;transform:none}}
+@keyframes shake{0%,59.5%{transform:none}61%{transform:translate(-2.5%,1%)}63%{transform:translate(2%,-1.2%)}65%{transform:translate(-1.4%,.8%)}67%{transform:translate(1%,-.5%)}70%,100%{transform:none}}
+
+.bar{display:flex;gap:10px;align-items:center;font:600 14px system-ui,sans-serif}
+button{font:inherit;font-weight:700;border:0;border-radius:99px;padding:11px 22px;background:var(--btn);color:var(--btn-ink);cursor:pointer;min-height:44px}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.note{max-width:340px;text-align:center;font:13px/1.4 system-ui,sans-serif;opacity:.75;margin:0}
+@media (prefers-reduced-motion: reduce){.play #stage{animation:none}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <div class="timer" id="timer">00:00</div>
+    <div class="cap">Lagi fokus kerja. Tenang banget…</div>
+    <div class="desk"></div>
+    <div class="guy"><span class="calm">🧑‍💻</span><span class="hit">😵</span></div>
+    <div class="galon"></div>
+    <div class="flash"></div>
+    <div class="bonk">BONK!</div>
+    <div class="gk">GILA<br>KAMU!!</div>
+  </div>
+</div>
+<div class="bar">
+  <button id="go" type="button">▶ Putar</button>
+  <label><input type="checkbox" id="snd" checked> Efek suara</label>
+</div>
+<p class="note">Efek “bonk” dibuat sintetis. Audio asli “gila kamu” bisa kamu tempel sendiri saat edit video.</p>
+
+<script>
+(function(){
+  var app=document.getElementById('app'),go=document.getElementById('go'),
+      snd=document.getElementById('snd'),timer=document.getElementById('timer'),raf=0,ctx=null;
+  function bonk(at){
+    try{
+      ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+      var t=ctx.currentTime+at,o=ctx.createOscillator(),g=ctx.createGain();
+      o.type='triangle';o.frequency.setValueAtTime(220,t);o.frequency.exponentialRampToValueAtTime(55,t+.28);
+      g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.9,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+.4);
+      o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+.45);
+      var n=ctx.createBufferSource(),b=ctx.createBuffer(1,ctx.sampleRate*.12,ctx.sampleRate),d=b.getChannelData(0);
+      for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);
+      var f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=900;
+      var g2=ctx.createGain();g2.gain.value=.6;n.buffer=b;n.connect(f).connect(g2).connect(ctx.destination);n.start(t);
+    }catch(e){}
+  }
+  function tick(t0){
+    var s=Math.min(5,(performance.now()-t0)/1000);
+    timer.textContent='00:0'+Math.floor(s);
+    if(s<5)raf=requestAnimationFrame(function(){tick(t0)});
+  }
+  function play(){
+    cancelAnimationFrame(raf);
+    app.classList.remove('play');void app.offsetWidth;app.classList.add('play');
+    if(snd.checked)bonk(3.0);
+    tick(performance.now());
+    go.textContent='↻ Ulangi';
+  }
+  go.addEventListener('click',play);
+})();
+</script>
+</body>
+</html>
